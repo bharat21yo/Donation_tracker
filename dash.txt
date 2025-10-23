@@ -1,0 +1,458 @@
+   <!-- Browse NGOs View -->
+<div id="browse-ngos-view" class="hidden">
+     <main class="main-content">
+       <div class="container">
+         <div class="section">
+           <div class="section-header">
+             <i class="fas fa-search"></i>
+             <h2>Browse NGOs & Charities</h2>
+           </div>
+           <div class="section-content">
+             <div class="search-filter">
+               <div class="search-box">
+                 <input type="text" class="form-control" placeholder="Search NGOs by name or cause..." id="searchInput">
+               </div>
+               <div class="filter-box">
+                 <select class="form-control form-select" id="causeFilter">
+                   <option value="">All Causes</option>
+                   <option value="education">Education</option>
+                   <option value="health">Healthcare</option>
+                   <option value="environment">Environment</option>
+                   <option value="poverty">Poverty Relief</option>
+                   <option value="disaster">Disaster Relief</option>
+                 </select>
+               </div>
+               <button class="btn btn-primary" onclick="filterNGOs()">
+                 <i class="fas fa-filter"></i> Filter
+               </button>
+             </div>
+
+             <div class="card-list" id="ngoList">
+               <!-- Sample NGOs -->
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h3 class="card-title">Hope Foundation</h3>
+                     <p class="card-subtitle"><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra</p>
+                   </div>
+                   <span class="status-badge status-approved">Verified</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Cause:</strong> Education for Underprivileged Children</p>
+                   <p>Providing quality education and school supplies to children in rural areas. Currently seeking donations for books, uniforms, and educational materials.</p>
+                   <p><strong>Current Need:</strong> ₹50,000 for school supplies</p>
+                 </div>
+                 <div class="card-actions">
+                   <button class="btn btn-primary" onclick="openDonationModal('Hope Foundation')">
+                     <i class="fas fa-heart"></i> Donate Now
+                   </button>
+                   <button class="btn btn-secondary">
+                     <i class="fas fa-info-circle"></i> View Details
+                   </button>
+                 </div>
+               </div>
+
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h3 class="card-title">Green Earth Initiative</h3>
+                     <p class="card-subtitle"><i class="fas fa-map-marker-alt"></i> Delhi, India</p>
+                   </div>
+                   <span class="status-badge status-approved">Verified</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Cause:</strong> Environmental Conservation</p>
+                   <p>Working towards reforestation and clean water initiatives. Looking for both financial donations and volunteer support.</p>
+                   <p><strong>Current Need:</strong> ₹1,00,000 for tree plantation drive</p>
+                 </div>
+                 <div class="card-actions">
+                   <button class="btn btn-primary" onclick="openDonationModal('Green Earth Initiative')">
+                     <i class="fas fa-heart"></i> Donate Now
+                   </button>
+                   <button class="btn btn-secondary">
+                     <i class="fas fa-info-circle"></i> View Details
+                   </button>
+                 </div>
+               </div>
+
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h3 class="card-title">Healthcare Heroes</h3>
+                     <p class="card-subtitle"><i class="fas fa-map-marker-alt"></i> Bangalore, Karnataka</p>
+                   </div>
+                   <span class="status-badge status-approved">Verified</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Cause:</strong> Rural Healthcare</p>
+                   <p>Providing free medical camps and healthcare services in remote villages. Seeking medical equipment and funding support.</p>
+                   <p><strong>Current Need:</strong> Medical equipment worth ₹2,00,000</p>
+                 </div>
+                 <div class="card-actions">
+                   <button class="btn btn-primary" onclick="openDonationModal('Healthcare Heroes')">
+                     <i class="fas fa-heart"></i> Donate Now
+                   </button>
+                   <button class="btn btn-secondary">
+                     <i class="fas fa-info-circle"></i> View Details
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </main>
+   </div>
+
+
+<!-- Donor Dashboard View -->
+   <div id="donor-dashboard-view" class="hidden">
+     <main class="main-content">
+       <div class="container">
+         <div class="section">
+           <div class="section-header">
+             <i class="fas fa-tachometer-alt"></i>
+             <h2>Donor Dashboard</h2>
+           </div>
+           <div class="section-content">
+             <div class="dashboard-grid">
+               <div class="card">
+                 <h3><i class="fas fa-chart-line"></i> Total Donations</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">₹25,500</p>
+                 <p>Across 8 different NGOs</p>
+               </div>
+               <div class="card">
+                 <h3><i class="fas fa-calendar-alt"></i> This Month</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--success);">₹3,200</p>
+                 <p>2 donations completed</p>
+               </div>
+               <div class="card">
+                 <h3><i class="fas fa-award"></i> Impact Score</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--accent-color);">92/100</p>
+                 <p>Top 10% contributor</p>
+               </div>
+             </div>
+
+             <!-- Recent Donations -->
+             <h3 style="margin: 2rem 0 1rem 0;"><i class="fas fa-history"></i> Recent Donations</h3>
+             <div class="card-list">
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h4 class="card-title">Hope Foundation</h4>
+                     <p class="card-subtitle">August 15, 2025</p>
+                   </div>
+                   <span class="status-badge status-completed">Completed</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Amount:</strong> ₹5,000</p>
+                   <p><strong>Type:</strong> Financial Donation</p>
+                   <p><strong>Purpose:</strong> School supplies for 50 children</p>
+                 </div>
+               </div>
+
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h4 class="card-title">Green Earth Initiative</h4>
+                     <p class="card-subtitle">August 10, 2025</p>
+                   </div>
+                   <span class="status-badge status-pending">In Progress</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Type:</strong> Goods Donation</p>
+                   <p><strong>Items:</strong> 20 books, 10 notebooks</p>
+                   <p><strong>Status:</strong> Awaiting pickup</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </main>
+   </div>
+
+<!-- NGO Dashboard View -->
+   <div id="ngo-dashboard-view" class="hidden">
+     <main class="main-content">
+       <div class="container">
+         <div class="section">
+           <div class="section-header">
+             <i class="fas fa-building"></i>
+             <h2>NGO Dashboard</h2>
+           </div>
+           <div class="section-content">
+             <div class="dashboard-grid">
+               <div class="card">
+                 <h3><i class="fas fa-money-bill-wave"></i> Total Received</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--success);">₹1,25,000</p>
+                 <p>From 45 donors</p>
+               </div>
+               <div class="card">
+                 <h3><i class="fas fa-bullseye"></i> Active Campaigns</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">3</p>
+                 <p>Currently seeking donations</p>
+               </div>
+               <div class="card">
+                 <h3><i class="fas fa-users"></i> Total Donors</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--accent-color);">45</p>
+                 <p>Unique contributors</p>
+               </div>
+             </div>
+
+             <div style="display: flex; gap: 1rem; margin: 2rem 0;">
+               <button class="btn btn-primary" onclick="openModal('newCampaignModal')">
+                 <i class="fas fa-plus"></i> New Campaign
+               </button>
+               <button class="btn btn-success">
+                 <i class="fas fa-chart-bar"></i> View Reports
+               </button>
+             </div>
+
+             <!-- Active Campaigns -->
+             <h3 style="margin: 2rem 0 1rem 0;"><i class="fas fa-bullseye"></i> Active Campaigns</h3>
+             <div class="card-list">
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h4 class="card-title">School Supplies Drive 2025</h4>
+                     <p class="card-subtitle">Goal: ₹50,000 | Raised: ₹32,000 (64%)</p>
+                   </div>
+                   <span class="status-badge status-approved">Active</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Type:</strong> Financial + Goods</p>
+                   <p><strong>Description:</strong> Providing books, uniforms, and stationery to 100 underprivileged children</p>
+                   <div style="background: #e5e7eb; height: 8px; border-radius: 4px; margin: 1rem 0;">
+                     <div style="background: var(--success); height: 100%; width: 64%; border-radius: 4px;"></div>
+                   </div>
+                 </div>
+                 <div class="card-actions">
+                   <button class="btn btn-primary">Edit Campaign</button>
+                   <button class="btn btn-secondary">View Donors</button>
+                 </div>
+               </div>
+
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h4 class="card-title">Winter Clothing Distribution</h4>
+                     <p class="card-subtitle">Goal: ₹75,000 | Raised: ₹18,000 (24%)</p>
+                   </div>
+                   <span class="status-badge status-approved">Active</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Type:</strong> Goods Donation</p>
+                   <p><strong>Description:</strong> Collecting warm clothes and blankets for homeless individuals</p>
+                   <div style="background: #e5e7eb; height: 8px; border-radius: 4px; margin: 1rem 0;">
+                     <div style="background: var(--warning); height: 100%; width: 24%; border-radius: 4px;"></div>
+                   </div>
+                 </div>
+                 <div class="card-actions">
+                   <button class="btn btn-primary">Edit Campaign</button>
+                   <button class="btn btn-secondary">View Donors</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </main>
+   </div>
+
+
+<!-- Admin Dashboard View -->
+   <div id="admin-dashboard-view" class="hidden">
+     <main class="main-content">
+       <div class="container">
+         <div class="section">
+           <div class="section-header">
+             <i class="fas fa-cog"></i>
+             <h2>Admin Dashboard</h2>
+           </div>
+           <div class="section-content">
+             <div class="dashboard-grid">
+               <div class="card">
+                 <h3><i class="fas fa-building"></i> Total NGOs</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">156</p>
+                 <p>12 pending approval</p>
+               </div>
+               <div class="card">
+                 <h3><i class="fas fa-users"></i> Total Donors</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--success);">2,847</p>
+                 <p>+23 this week</p>
+               </div>
+               <div class="card">
+                 <h3><i class="fas fa-chart-line"></i> Total Donations</h3>
+                 <p style="font-size: 2rem; font-weight: bold; color: var(--accent-color);">₹45,67,890</p>
+                 <p>This month: ₹3,45,600</p>
+               </div>
+             </div>
+
+             <!-- Pending Approvals -->
+             <h3 style="margin: 2rem 0 1rem 0;"><i class="fas fa-clock"></i> Pending NGO Approvals</h3>
+             <div class="card-list">
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h4 class="card-title">Smile Foundation</h4>
+                     <p class="card-subtitle">Applied: August 20, 2025</p>
+                   </div>
+                   <span class="status-badge status-pending">Pending</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Cause:</strong> Child Education & Welfare</p>
+                   <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
+                   <p><strong>Registration No:</strong> REG/2025/0892</p>
+                 </div>
+                 <div class="card-actions">
+                   <button class="btn btn-success">Approve</button>
+                   <button class="btn btn-secondary">Review</button>
+                   <button class="btn" style="background: var(--error); color: white;">Reject</button>
+                 </div>
+               </div>
+
+               <div class="card">
+                 <div class="card-header">
+                   <div>
+                     <h4 class="card-title">Clean Water Initiative</h4>
+                     <p class="card-subtitle">Applied: August 18, 2025</p>
+                   </div>
+                   <span class="status-badge status-pending">Pending</span>
+                 </div>
+                 <div class="card-content">
+                   <p><strong>Cause:</strong> Water & Sanitation</p>
+                   <p><strong>Location:</strong> Rajasthan, India</p>
+                   <p><strong>Registration No:</strong> REG/2025/0891</p>
+                 </div>
+                 <div class="card-actions">
+                   <button class="btn btn-success">Approve</button>
+                   <button class="btn btn-secondary">Review</button>
+                   <button class="btn" style="background: var(--error); color: white;">Reject</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </main>
+   </div>
+
+
+   
+   <!-- Donation Modal -->
+   <div id="donationModal" class="modal">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h2 class="modal-title">Make a Donation</h2>
+         <span class="close" onclick="closeModal('donationModal')">&times;</span>
+       </div>
+       <form id="donationForm">
+         <div class="form-group">
+           <label for="donationType">Donation Type</label>
+           <select id="donationType" class="form-control form-select" onchange="toggleDonationFields()">
+             <option value="money">Financial Donation</option>
+             <option value="goods">Goods Donation</option>
+             <option value="services">Service Donation</option>
+           </select>
+         </div>
+
+         <div id="moneyFields">
+           <div class="form-group">
+             <label for="donationAmount">Amount (₹)</label>
+             <input type="number" id="donationAmount" class="form-control" min="1">
+           </div>
+           <div class="form-group">
+             <label for="paymentMethod">Payment Method</label>
+             <select id="paymentMethod" class="form-control form-select">
+               <option value="razorpay">Razorpay</option>
+               <option value="paypal">PayPal</option>
+               <option value="bank">Bank Transfer</option>
+             </select>
+           </div>
+         </div>
+
+         <div id="goodsFields" class="hidden">
+           <div class="form-group">
+             <label for="goodsDescription">Description of Goods</label>
+             <textarea id="goodsDescription" class="form-control" rows="3" placeholder="Describe the items you want to donate..."></textarea>
+           </div>
+           <div class="form-group">
+             <label for="goodsQuantity">Estimated Quantity/Value</label>
+             <input type="text" id="goodsQuantity" class="form-control" placeholder="e.g., 50 books, ₹5000 worth clothes">
+           </div>
+         </div>
+
+         <div id="serviceFields" class="hidden">
+           <div class="form-group">
+             <label for="serviceDescription">Service Description</label>
+             <textarea id="serviceDescription" class="form-control" rows="3" placeholder="Describe the service you want to offer..."></textarea>
+           </div>
+           <div class="form-group">
+             <label for="serviceAvailability">Availability</label>
+             <input type="text" id="serviceAvailability" class="form-control" placeholder="e.g., Weekends, 2 hours daily">
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label for="donationMessage">Message (Optional)</label>
+           <textarea id="donationMessage" class="form-control" rows="2" placeholder="Any special message for the NGO..."></textarea>
+         </div>
+
+         <button type="submit" class="btn btn-primary" style="width: 100%;">
+           <i class="fas fa-heart"></i> Confirm Donation
+         </button>
+       </form>
+     </div>
+   </div>
+
+   <!-- New Campaign Modal -->
+   <div id="newCampaignModal" class="modal">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h2 class="modal-title">Create New Campaign</h2>
+         <span class="close" onclick="closeModal('newCampaignModal')">&times;</span>
+       </div>
+       <form id="newCampaignForm">
+         <div class="form-group">
+           <label for="campaignTitle">Campaign Title</label>
+           <input type="text" id="campaignTitle" class="form-control" required>
+         </div>
+         <div class="form-group">
+           <label for="campaignDescription">Description</label>
+           <textarea id="campaignDescription" class="form-control" rows="4" required></textarea>
+         </div>
+         <div class="form-group">
+           <label for="campaignGoal">Target Amount (₹)</label>
+           <input type="number" id="campaignGoal" class="form-control" min="1" required>
+         </div>
+         <div class="form-group">
+           <label for="campaignType">Campaign Type</label>
+           <select id="campaignType" class="form-control form-select" required>
+             <option value="financial">Financial Donations</option>
+             <option value="goods">Goods Collection</option>
+             <option value="both">Both Financial & Goods</option>
+           </select>
+         </div>
+         <div class="form-group">
+           <label for="campaignDeadline">Deadline</label>
+           <input type="date" id="campaignDeadline" class="form-control" required>
+         </div>
+         <button type="submit" class="btn btn-primary" style="width: 100%;">
+           <i class="fas fa-plus"></i> Create Campaign
+         </button>
+       </form>
+     </div>
+   </div>
+
+
+
+
+<div class="dashboard-card admin-card">
+             <i class="fas fa-cog"></i>
+             <h3>Admin Panel</h3>
+             <p>Manage platform operations, verify organizations, and monitor donation activities.</p>
+             <a href="#" class="btn btn-primary" onclick="showView('admin-login')">
+               <i class="fas fa-arrow-right"></i> Admin Access
+             </a>
+           </div>

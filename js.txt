@@ -1,0 +1,299 @@
+<script>
+     // Global variables
+     let currentView = 'home';
+     let currentUser = null;
+
+     // View Management
+     function showView(viewName) {
+       // Hide all views
+       const views = ['home', 'browse-ngos', 'donor-dashboard', 'ngo-dashboard', 'admin-dashboard'];
+       views.forEach(view => {
+         const element = document.getElementById(view + '-view');
+         if (element) {
+           element.classList.add('hidden');
+         }
+       });
+
+       // Show selected view
+       const targetView = document.getElementById(viewName + '-view');
+       if (targetView) {
+         targetView.classList.remove('hidden');
+         currentView = viewName;
+       }
+
+       // Update navigation if needed
+       updateNavigation();
+     }
+
+     function updateNavigation() {
+       const authButtons = document.querySelector('.auth-buttons');
+       if (currentUser) {
+         authButtons.innerHTML = `
+                    <span style="color: white; margin-right: 1rem;">Welcome, ${currentUser.name}</span>
+                    <button class="btn btn-secondary" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                `;
+       }
+     }
+
+     // Modal Management
+     function openModal(modalId, userType = null) {
+       const modal = document.getElementById(modalId);
+       if (modal) {
+         modal.style.display = 'block';
+
+         // Set user type if provided
+         if (userType && modalId === 'registerModal') {
+           document.getElementById('regUserType').value = userType;
+           toggleRegistrationFields();
+         }
+       }
+     }
+
+     function closeModal(modalId) {
+       const modal = document.getElementById(modalId);
+       if (modal) {
+         modal.style.display = 'none';
+       }
+     }
+
+     // Close modal when clicking outside
+     window.onclick = function(event) {
+       if (event.target.classList.contains('modal')) {
+         event.target.style.display = 'none';
+       }
+     }
+
+     // Registration Form Management
+     function toggleRegistrationFields() {
+       const userType = document.getElementById('regUserType').value;
+       const donorFields = document.getElementById('donorFields');
+       const ngoFields = document.getElementById('ngoFields');
+
+       if (userType === 'donor') {
+         donorFields.classList.remove('hidden');
+         ngoFields.classList.add('hidden');
+       } else {
+         donorFields.classList.add('hidden');
+         ngoFields.classList.remove('hidden');
+       }
+     }
+
+     // Donation Form Management
+     function toggleDonationFields() {
+       const donationType = document.getElementById('donationType').value;
+       const moneyFields = document.getElementById('moneyFields');
+       const goodsFields = document.getElementById('goodsFields');
+       const serviceFields = document.getElementById('serviceFields');
+
+       // Hide all fields first
+       moneyFields.classList.add('hidden');
+       goodsFields.classList.add('hidden');
+       serviceFields.classList.add('hidden');
+
+       // Show relevant fields
+       if (donationType === 'money') {
+         moneyFields.classList.remove('hidden');
+       } else if (donationType === 'goods') {
+         goodsFields.classList.remove('hidden');
+       } else if (donationType === 'services') {
+         serviceFields.classList.remove('hidden');
+       }
+     }
+
+     function openDonationModal(ngoName) {
+       document.querySelector('#donationModal .modal-title').textContent = `Donate to ${ngoName}`;
+       openModal('donationModal');
+     }
+
+     // Form Submissions
+     document.getElementById('loginForm').addEventListener('submit', function(e) {
+       e.preventDefault();
+
+       const email = document.getElementById('loginEmail').value;
+       const password = document.getElementById('loginPassword').value;
+       const userType = document.getElementById('userType').value;
+
+       // Simulate login process
+       showAlert('success', 'Login successful! Redirecting to dashboard...');
+
+       // Set current user
+       currentUser = {
+         name: email.split('@')[0],
+         type: userType,
+         email: email
+       };
+
+       setTimeout(() => {
+         closeModal('loginModal');
+
+         // Redirect to appropriate dashboard
+         if (userType === 'donor') {
+           showView('donor-dashboard');
+         } else if (userType === 'ngo') {
+           showView('ngo-dashboard');
+         } else if (userType === 'admin') {
+           showView('admin-dashboard');
+         }
+       }, 1500);
+     });
+
+     document.getElementById('registerForm').addEventListener('submit', function(e) {
+       e.preventDefault();
+
+       const userType = document.getElementById('regUserType').value;
+       const password = document.getElementById('regPassword').value;
+       const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+       if (password !== confirmPassword) {
+         showAlert('error', 'Passwords do not match!');
+         return;
+       }
+
+       // Simulate registration process
+       if (userType === 'ngo') {
+         showAlert('success', 'NGO registration submitted! Your account will be reviewed by admin within 24-48 hours.');
+       } else {
+         showAlert('success', 'Account created successfully! You can now login.');
+       }
+
+       setTimeout(() => {
+         closeModal('registerModal');
+         if (userType === 'donor') {
+           openModal('loginModal');
+         }
+       }, 2000);
+     });
+
+     document.getElementById('donationForm').addEventListener('submit', function(e) {
+       e.preventDefault();
+
+       const donationType = document.getElementById('donationType').value;
+
+       // Simulate donation process
+       showAlert('success', `${donationType.charAt(0).toUpperCase() + donationType.slice(1)} donation submitted successfully! The NGO will be notified.`);
+
+       setTimeout(() => {
+         closeModal('donationModal');
+       }, 2000);
+     });
+
+     document.getElementById('newCampaignForm').addEventListener('submit', function(e) {
+       e.preventDefault();
+
+       showAlert('success', 'Campaign created successfully and is now live!');
+
+       setTimeout(() => {
+         closeModal('newCampaignModal');
+         // Refresh the campaigns list here
+       }, 1500);
+     });
+
+     // Search and Filter Functions
+     function filterNGOs() {
+       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+       const causeFilter = document.getElementById('causeFilter').value.toLowerCase();
+       const ngoCards = document.querySelectorAll('#ngoList .card');
+
+       ngoCards.forEach(card => {
+         const title = card.querySelector('.card-title').textContent.toLowerCase();
+         const content = card.querySelector('.card-content').textContent.toLowerCase();
+
+         const matchesSearch = !searchTerm || title.includes(searchTerm) || content.includes(searchTerm);
+         const matchesCause = !causeFilter || content.includes(causeFilter);
+
+         if (matchesSearch && matchesCause) {
+           card.style.display = 'block';
+         } else {
+           card.style.display = 'none';
+         }
+       });
+     }
+
+     // Utility Functions
+     function showAlert(type, message) {
+       const alertDiv = document.createElement('div');
+       alertDiv.className = `alert alert-${type}`;
+       alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                ${message}
+            `;
+
+       // Insert at the top of the current view
+       const currentViewElement = document.querySelector('[id$="-view"]:not(.hidden)');
+       if (currentViewElement) {
+         currentViewElement.insertBefore(alertDiv, currentViewElement.firstChild);
+       }
+
+       // Remove alert after 5 seconds
+       setTimeout(() => {
+         if (alertDiv.parentNode) {
+           alertDiv.parentNode.removeChild(alertDiv);
+         }
+       }, 5000);
+     }
+
+     function logout() {
+       currentUser = null;
+       showView('home');
+
+       // Reset auth buttons
+       const authButtons = document.querySelector('.auth-buttons');
+       authButtons.innerHTML = `
+                <a href="#" class="btn btn-secondary" onclick="openModal('loginModal')">Login</a>
+                <a href="#" class="btn btn-primary" onclick="openModal('registerModal')">Register</a>
+            `;
+
+       showAlert('success', 'Logged out successfully!');
+     }
+
+     // Initialize the application
+     document.addEventListener('DOMContentLoaded', function() {
+       showView('home');
+
+       // Initialize search functionality
+       document.getElementById('searchInput').addEventListener('input', filterNGOs);
+       document.getElementById('causeFilter').addEventListener('change', filterNGOs);
+
+       console.log('Donation Tracker Application Loaded Successfully!');
+     });
+
+     // Geolocation API Integration (Optional)
+     function findNearbyNGOs() {
+       if ("geolocation" in navigator) {
+         navigator.geolocation.getCurrentPosition(function(position) {
+           const lat = position.coords.latitude;
+           const lon = position.coords.longitude;
+
+           showAlert('info', `Found your location! Showing NGOs near you...`);
+
+           // Here you would typically make an API call to get nearby NGOs
+           // For demo purposes, we'll just show a success message
+
+         }, function(error) {
+           showAlert('error', 'Unable to get your location. Please search manually.');
+         });
+       } else {
+         showAlert('error', 'Geolocation is not supported by this browser.');
+       }
+     }
+
+     // Payment Integration Simulation
+     function processPayment(amount, method) {
+       // This would typically integrate with Razorpay or PayPal
+       showAlert('info', `Processing payment of ₹${amount} via ${method}...`);
+
+       // Simulate payment processing
+       setTimeout(() => {
+         const success = Math.random() > 0.1; // 90% success rate for demo
+
+         if (success) {
+           showAlert('success', `Payment of ₹${amount} completed successfully!`);
+         } else {
+           showAlert('error', 'Payment failed. Please try again.');
+         }
+       }, 2000);
+     }
+   </script>
+
